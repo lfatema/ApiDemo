@@ -7,13 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./data.component.css'],
 })
 export class DataComponent implements OnInit {
-  reports: any[] = [];
+  public reports: any[] = [];
 
   constructor(private restService: RestService) {}
 
-  ngOnInit(): void {
-    this.restService.getReports().subscribe((response) => {
-      this.reports = response.json();
-    });
+  ngOnInit() {
+    this.restService.getReports().subscribe((data) => (this.reports = data));
   }
 }
