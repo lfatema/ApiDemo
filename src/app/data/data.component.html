@@ -1,1 +1,24 @@
-<p>data works!</p>
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Device Number</th>
+        <th>Device Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of reports">
+        <td>
+          <span>{{ report.id }}</span>
+        </td>
+        <td>
+          <span>{{ report.deviceNumber }}</span>
+        </td>
+        <td>
+          <span>{{ report.deviceInfo }} </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
