@@ -5,6 +5,7 @@
         <th>ID</th>
         <th>Device Number</th>
         <th>Device Info</th>
+        <th>Likes</th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,9 @@
         </td>
         <td>
           <span>{{ report.deviceInfo }} </span>
+        </td>
+        <td ng-repeat="l in likes">
+          <span> {{ likes }} </span>
         </td>
       </tr>
     </tbody>
