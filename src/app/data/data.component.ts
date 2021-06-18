@@ -8,10 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataComponent implements OnInit {
   public reports: any[] = [];
-
+  public likes: any[] = [];
+  public id = 8;
+  public reportId!: number;
   constructor(private restService: RestService) {}
 
   ngOnInit() {
+    this.getReports();
+    this.getlikes();
+  }
+
+  getReports() {
     this.restService.getReports().subscribe((data) => (this.reports = data));
   }
+
+  getlikes() {
+    this.restService
+      .getLikes(8)
+      .subscribe((reportId) => (this.likes = reportId));
+  }
 }
+
+// getlikes() {
+//   this.restService.getLikes(8).subscribe((Likes: any) => {
+//     return Likes;
+//   });
