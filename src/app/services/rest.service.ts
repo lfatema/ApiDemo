@@ -12,6 +12,8 @@ export class RestService {
 
   constructor(private http: HttpClient) {}
 
+  /* GET Requests */
+
   getReports(): Observable<IReports[]> {
     return this.http.get<IReports[]>(this.url).pipe(
       map((reports: any) => {
@@ -27,5 +29,13 @@ export class RestService {
         return likes;
       })
     );
+  }
+
+  /* POST Requests */
+  addReport(id: number): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    const body = JSON.stringify(id);
+    console.log(body);
+    return this.http.post(this.url + id, body, { headers: headers });
   }
 }

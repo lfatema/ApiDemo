@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="border">
+    <button class="btn btn-md btn-outline-primary">Create</button>
+  </div>
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
@@ -6,6 +9,7 @@
         <th>Device Number</th>
         <th>Device Info</th>
         <th>Likes</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -19,8 +23,13 @@
         <td>
           <span>{{ report.deviceInfo }} </span>
         </td>
-        <td ng-repeat="l in likes">
-          <span> {{ likes }} </span>
+        <td>
+          <span> {{ report.likes.length }} </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-info">Read</button>
+          <button class="btn btn-sm btn-warning">Update</button>
+          <button class="btn btn-sm btn-danger">Delete</button>
         </td>
       </tr>
     </tbody>
