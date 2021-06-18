@@ -1,5 +1,6 @@
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
+import { Likes } from '../services/report';
 
 @Component({
   selector: 'app-data',
@@ -15,17 +16,23 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getReports();
-    this.getlikes();
+    debugger;
   }
 
   getReports() {
-    this.restService.getReports().subscribe((data) => (this.reports = data));
+    this.restService.getReports().subscribe((data) => {
+      this.reports = data
+
+      this.reports.map(r => {
+        this.getlikes(r);
+      })
+    });
   }
 
-  getlikes() {
+  public getlikes(report: any){
     this.restService
-      .getLikes(8)
-      .subscribe((reportId) => (this.likes = reportId));
+      .getLikes(report.id)
+      .subscribe((data: Likes[]) => {report.likes = data;});
   }
 }
 
