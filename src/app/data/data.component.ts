@@ -1,7 +1,6 @@
-import { Likes } from './../services/report';
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Likes } from '../services/report';
 
 @Component({
   selector: 'app-data',
@@ -17,15 +16,23 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getReports();
-    this.getlikes();
+    debugger;
   }
 
   getReports() {
-    this.restService.getReports().subscribe((data) => (this.reports = data));
+    this.restService.getReports().subscribe((data) => {
+      this.reports = data;
+
+      this.reports.map((r) => {
+        this.getlikes(r);
+      });
+    });
   }
 
-  getlikes() {
-    this.restService.getLikes(8).subscribe((Likes) => (this.likes = Likes));
+  public getlikes(report: any) {
+    this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
+      report.likes = data;
+    });
   }
 
   //openModal();
