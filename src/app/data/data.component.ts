@@ -1,6 +1,9 @@
+import { Likes } from './../services/report';
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
-import { Likes } from '../services/report';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data',
@@ -12,33 +15,51 @@ export class DataComponent implements OnInit {
   public likes: any[] = [];
   public id = 8;
   public reportId!: number;
-  constructor(private restService: RestService) {}
+  public closeResult: string | undefined;
+  constructor(
+    private restService: RestService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
     this.getReports();
-    debugger;
   }
 
+  //Get Reports
   getReports() {
     this.restService.getReports().subscribe((data) => {
       this.reports = data;
 
-      this.reports.map((r) => {
-        this.getlikes(r);
-      });
+      // this.reports.map((r) => {
+      //   this.getlikes(r);
+      // });
     });
   }
 
   public getlikes(report: any) {
     this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
       report.likes = data;
+      this.likes = data;
     });
   }
 
-  //openModal();
-}
+  //Create Reports
+  open(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then((content) => {
+        // this.closeResult = `Closed with: ${result}`;
+        this.restService.addReport(content).subscribe((data) => {
+          console.log(data);
+          this.getReports();
+        });
+      });
+  }
 
-// getlikes() {
-//   this.restService.getLikes(8).subscribe((Likes: any) => {
-//     return Likes;
-//   });
+  onSubmit(f: NgForm) {
+    this.restService.addReport(f.value).subscribe((content) => {
+      this.ngOnInit();
+    });
+    this.modalService.dismissAll();
+  }
+}

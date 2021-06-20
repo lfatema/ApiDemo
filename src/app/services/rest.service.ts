@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { IReports, Likes } from './report';
 
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 @Injectable()
 export class RestService {
@@ -15,6 +15,7 @@ export class RestService {
   /* GET Requests */
 
   getReports(): Observable<IReports[]> {
+    delay(100);
     return this.http.get<IReports[]>(this.url).pipe(
       map((reports: any) => {
         console.log(reports);
@@ -23,6 +24,7 @@ export class RestService {
     );
   }
   getLikes(id: number): Observable<Likes[]> {
+    delay(100);
     return this.http.get<Likes[]>(this.url + id + '/likes').pipe(
       map((likes: any) => {
         console.log(likes);
@@ -32,10 +34,9 @@ export class RestService {
   }
 
   /* POST Requests */
-  addReport(id: number): Observable<any> {
+  addReport(data: IReports): Observable<any> {
     const headers = { 'content-type': 'application/json' };
-    const body = JSON.stringify(id);
-    console.log(body);
-    return this.http.post(this.url + id, body, { headers: headers });
+    const body = JSON.stringify(data);
+    return this.http.post(this.url, body, { headers: headers });
   }
 }

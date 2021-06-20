@@ -1,14 +1,18 @@
 <div class="container">
   <div class="border">
-    <button class="btn btn-md btn-outline-primary">Create</button>
+    <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+      Create
+    </button>
   </div>
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <th>ID</th>
+        <th>Created At</th>
+        <th>Updated At</th>
         <th>Device Number</th>
         <th>Device Info</th>
-        <th>Likes</th>
+        <!-- <th>Likes</th> -->
         <th>Actions</th>
       </tr>
     </thead>
@@ -18,20 +22,76 @@
           <span>{{ report.id }}</span>
         </td>
         <td>
+          <span>{{ report.createdAt }}</span>
+        </td>
+        <td>
+          <span>{{ report.updatedAt }}</span>
+        </td>
+        <td>
           <span>{{ report.deviceNumber }}</span>
         </td>
         <td>
           <span>{{ report.deviceInfo }} </span>
         </td>
-        <td>
+        <!-- <td>
           <span> {{ report.likes.length }} </span>
-        </td>
+        </td> -->
         <td>
-          <button class="btn btn-sm btn-info">Read</button>
-          <button class="btn btn-sm btn-warning">Update</button>
-          <button class="btn btn-sm btn-danger">Delete</button>
+          <button class="btn btn-sm btn-info" click="read(report.id)">
+            Read
+          </button>
+          <button class="btn btn-sm btn-warning" click="update(report.id )">
+            Update
+          </button>
+          <button class="btn btn-sm btn-danger" click="delete(report.id )">
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Report</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="form-group">
+        <label for="id">Id</label>
+        <div class="input-group">
+          <input id="id" class="form-control" />
+        </div>
+        <label for="deviceNum">Device Number</label>
+        <div class="input-group">
+          <input id="deviceNum" class="form-control" />
+        </div>
+        <label for="deviceInfo">Device Info</label>
+        <div class="input-group">
+          <input id="deviceInfo" class="form-control" />
+        </div>
+      </div>
+      <div class="text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
