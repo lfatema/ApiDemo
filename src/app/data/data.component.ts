@@ -1,8 +1,8 @@
-import { Likes } from './../services/report';
+import { Likes, IReports } from './../services/report';
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { delay } from 'rxjs/operators';
 
 @Component({
@@ -16,13 +16,22 @@ export class DataComponent implements OnInit {
   public id = 8;
   public reportId!: number;
   public closeResult: string | undefined;
+  editForm!: FormGroup;
   constructor(
     private restService: RestService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.getReports();
+    this.editForm = this.fb.group({
+      id: [],
+      createdAt: [''],
+      updatedAt: [''],
+      deviceNumber: [''],
+      deviceInfo: [''],
+    });
   }
 
   //Get Reports
@@ -48,7 +57,7 @@ export class DataComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then((content) => {
-        // this.closeResult = `Closed with: ${result}`;
+        this.closeResult = `Closed with: ${content}`;
         this.restService.addReport(content).subscribe((data) => {
           console.log(data);
           this.getReports();
@@ -61,5 +70,42 @@ export class DataComponent implements OnInit {
       this.ngOnInit();
     });
     this.modalService.dismissAll();
+  }
+
+  //Read Reports
+  openDetails(targetModal: any, report: IReports) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg',
+    });
+    // document.getElementById('id_rep').setAttribute('value', report.id);
+    // document
+    //   .getElementById('createdAt_rep')
+    //   .setAttribute('value', report.createdAt);
+    // document
+    //   .getElementById('updatedAt_rep')
+    //   .setAttribute('value', report.updatedAt);
+    // document
+    //   .getElementById('deviceNum_rep')
+    //   .setAttribute('value', report.deviceNumber);
+    // document
+    //   .getElementById('deviceInfo_rep')
+    //   .setAttribute('value', report.deviceInfo);
+  }
+
+  //Edit Reports
+
+  openEdit(targetModal: any, report: IReports) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg',
+    });
+    this.editForm.patchValue({
+      id: report.id,
+      deviceNum: report.deviceNumber,
+      deviceInfo: report.deviceInfo,
+    });
   }
 }

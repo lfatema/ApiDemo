@@ -37,11 +37,17 @@
           <span> {{ report.likes.length }} </span>
         </td> -->
         <td>
-          <button class="btn btn-sm btn-info" click="read(report.id)">
+          <button
+            class="btn btn-sm btn-info"
+            click="openDetails(contentDetails, report"
+          >
             Read
           </button>
-          <button class="btn btn-sm btn-warning" click="update(report.id )">
-            Update
+          <button
+            class="btn btn-sm btn-warning"
+            click="openEdit(contentEdit, report )"
+          >
+            Edit
           </button>
           <button class="btn btn-sm btn-danger" click="delete(report.id )">
             Delete
@@ -52,6 +58,7 @@
   </table>
 </div>
 
+<!--Create Reports-->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">New Report</h4>
@@ -69,15 +76,28 @@
       <div class="form-group">
         <label for="id">Id</label>
         <div class="input-group">
-          <input id="id" class="form-control" />
+          <input id="id" name="id" class="form-control" ngModel />
+        </div>
+        <label for="createdAt">Created At</label>
+        <div class="input-group">
+          <input id="createdAt" name="createdAt" class="form-control" ngModel />
+        </div>
+        <label for="UpdateAt">Updated At</label>
+        <div class="input-group">
+          <input id="updatedAt" name="updatedAt" class="form-control" ngModel />
         </div>
         <label for="deviceNum">Device Number</label>
         <div class="input-group">
-          <input id="deviceNum" class="form-control" />
+          <input id="deviceNum" name="deviceNum" class="form-control" ngModel />
         </div>
         <label for="deviceInfo">Device Info</label>
         <div class="input-group">
-          <input id="deviceInfo" class="form-control" />
+          <input
+            id="deviceInfo"
+            name="deviceInfo"
+            class="form-control"
+            ngModel
+          />
         </div>
       </div>
       <div class="text-center">
@@ -93,5 +113,94 @@
     >
       Cancel
     </button>
+  </div>
+</ng-template>
+
+<!--Read Reports-->
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Read Report</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="id">Id</label>
+        <div class="input-group">
+          <input id="id_rep" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="createdAt">Created At</label>
+        <div class="input-group">
+          <input id="createdAt_rep" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="updatedAt">Updated At</label>
+        <div class="input-group">
+          <input id="updatedAt_rep" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="deviceNum">Device Number</label>
+        <div class="input-group">
+          <input id="deviceNum_rep" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="deviceInfo">Device Info</label>
+        <div class="input-group">
+          <input id="deviceInfo_rep" class="form-control" />
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!--Edit Reports-->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Report</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      <div class="form-group">
+        <label for="id">Id</label>
+        <div class="input-group">
+          <input formControlName="id" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="deviceNum">Device Number</label>
+        <div class="input-group">
+          <input formControlName="deviceNum" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="deviceInfo">Device Info</label>
+        <div class="input-group">
+          <input formControlName="deviceInfo" class="form-control" />
+        </div>
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Save Changes</button>
+      </div>
+    </form>
   </div>
 </ng-template>
