@@ -39,17 +39,21 @@
         <td>
           <button
             class="btn btn-sm btn-info"
-            click="openDetails(contentDetails, report"
+            (click)="openDetails(contentDetails, report)"
           >
             Read
           </button>
           <button
             class="btn btn-sm btn-warning"
-            click="openEdit(contentEdit, report )"
+            (click)="openEdit(contentEdit, report.id)"
           >
             Edit
           </button>
-          <button class="btn btn-sm btn-danger" click="delete(report.id )">
+
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="openDelete(contentDelete, report.id)"
+          >
             Delete
           </button>
         </td>
@@ -72,7 +76,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)" novalidate>
       <div class="form-group">
         <label for="id">Id</label>
         <div class="input-group">
@@ -202,5 +206,35 @@
         <button data-dismiss="modal" class="btn btn-info">Save Changes</button>
       </div>
     </form>
+  </div>
+</ng-template>
+
+<!--Delete Report-->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete this record.</h2>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-danger">Yes, Delete!</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Cancel
+    </button>
   </div>
 </ng-template>

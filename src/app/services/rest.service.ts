@@ -1,9 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IReports, Likes } from './report';
-
-import { delay, map } from 'rxjs/operators';
+import { catchError, delay, map } from 'rxjs/operators';
 
 @Injectable()
 export class RestService {
@@ -23,6 +26,7 @@ export class RestService {
       })
     );
   }
+
   getLikes(id: number): Observable<Likes[]> {
     delay(100);
     return this.http.get<Likes[]>(this.url + id + '/likes').pipe(
@@ -34,9 +38,14 @@ export class RestService {
   }
 
   /* POST Requests */
-  addReport(data: IReports): Observable<any> {
+  addReport(report: IReports): Observable<any> {
     const headers = { 'content-type': 'application/json' };
-    const body = JSON.stringify(data);
+    const body = JSON.stringify(report);
     return this.http.post(this.url, body, { headers: headers });
+  }
+
+  /* DELETE Requests */
+  deleteReport(id: number): Observable<IReports> {
+    return this.http.delete<IReports>(this.url + id);
   }
 }

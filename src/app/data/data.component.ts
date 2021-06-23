@@ -3,7 +3,7 @@ import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-data',
@@ -13,14 +13,15 @@ import { delay } from 'rxjs/operators';
 export class DataComponent implements OnInit {
   public reports: any[] = [];
   public likes: any[] = [];
-  public id = 8;
   public reportId!: number;
-  public closeResult: string | undefined;
+  closeResult!: string;
+  selectedReported: any;
   editForm!: FormGroup;
   constructor(
     private restService: RestService,
     private modalService: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -45,6 +46,7 @@ export class DataComponent implements OnInit {
     });
   }
 
+  //Get Likes
   public getlikes(report: any) {
     this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
       report.likes = data;
@@ -56,42 +58,51 @@ export class DataComponent implements OnInit {
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then((content) => {
-        this.closeResult = `Closed with: ${content}`;
-        this.restService.addReport(content).subscribe((data) => {
-          console.log(data);
-          this.getReports();
-        });
-      });
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          // this.restService.addReport(content).subscribe((data) => {
+          //   console.log(data);
+          //   this.getReports();
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   onSubmit(f: NgForm) {
-    this.restService.addReport(f.value).subscribe((content) => {
-      this.ngOnInit();
-    });
+    this.http
+      .post('https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports/', f)
+      .subscribe((result) => {
+        console.log('Result: ', result);
+      });
+    // this.restService.addReport(f.value).subscribe((content) => {
+    this.ngOnInit();
+    // console.log(content);
+    // });
     this.modalService.dismissAll();
   }
 
   //Read Reports
-  openDetails(targetModal: any, report: IReports) {
+  openDetails(targetModal: any, report: number) {
+    //this.selectedReported = report;
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static',
       size: 'lg',
     });
-    // document.getElementById('id_rep').setAttribute('value', report.id);
-    // document
-    //   .getElementById('createdAt_rep')
-    //   .setAttribute('value', report.createdAt);
-    // document
-    //   .getElementById('updatedAt_rep')
-    //   .setAttribute('value', report.updatedAt);
-    // document
-    //   .getElementById('deviceNum_rep')
-    //   .setAttribute('value', report.deviceNumber);
-    // document
-    //   .getElementById('deviceInfo_rep')
-    //   .setAttribute('value', report.deviceInfo);
+    this.restService.getReports();
   }
 
   //Edit Reports
@@ -108,4 +119,25 @@ export class DataComponent implements OnInit {
       deviceInfo: report.deviceInfo,
     });
   }
+
+  //Delete Reports
+
+  deleteReport(id: number) {
+    this.restService
+      .deleteReport(id)
+      .subscribe(() => console.log('Report Deleted'));
+  }
+  openDelete(targetModal: any, report: IReports) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg',
+    });
+  }
+
+  // onDelete() {
+  //   this.modalService.delete(this.reportId).subscribe((data) => {
+  //     this.ngOnInit();
+  //     this.modalService.dismissAll();
+  //   });
 }
