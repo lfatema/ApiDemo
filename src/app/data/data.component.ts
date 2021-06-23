@@ -85,6 +85,7 @@ export class DataComponent implements OnInit {
     this.http
       .post('https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports/', f)
       .subscribe((result) => {
+        this.reports.push(result);
         console.log('Result: ', result);
       });
     // this.restService.addReport(f.value).subscribe((content) => {
