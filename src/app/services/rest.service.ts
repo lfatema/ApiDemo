@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class RestService {
   private url: string =
-    'https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports/';
+    'https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports?page=1&limit=10';
 
   constructor(private http: HttpClient) {}
 
