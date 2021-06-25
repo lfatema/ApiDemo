@@ -49,4 +49,8 @@ export class RestService {
   deleteReport(id: number): Observable<IReports> {
     return this.http.delete<IReports>(this.url + "/" + id);
   }
+
+  editReport(report: IReports): Observable<any>{
+    return this.http.post(this.url, report);
+  }
 }

@@ -154,6 +154,14 @@ export class DataComponent implements OnInit {
     this.setActiveReport(report);
   }
 
+  editReport(report: IReports){
+    this.restService.editReport(report).subscribe((result)=> {
+      console.log(result);
+    }, (error)=>{
+      console.error(error)
+    })
+  }
+
   // onDelete() {
   //   this.modalService.delete(this.reportId).subscribe((data) => {
   //     this.ngOnInit();
