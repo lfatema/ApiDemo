@@ -24,6 +24,15 @@ export class DataComponent implements OnInit {
     private http: HttpClient
   ) {}
 
+  // Set Active Report for transferring data to edit or delete
+  activeReport: IReports = {
+     id: -1,
+     createdAt: new Date(),
+     updatedAt: new Date(),
+     deviceNumber: -1,
+     deviceInfo: ""
+  };
+
   ngOnInit() {
     this.getReports();
     this.editForm = this.fb.group({
@@ -46,6 +55,10 @@ export class DataComponent implements OnInit {
     });
   }
 
+  setActiveReport(report: IReports){
+    this.activeReport = report;
+  }
+
   //Get Likes
   public getlikes(report: any) {
     this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
@@ -59,10 +72,10 @@ export class DataComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result) => {
+        (result:any) => {
           this.closeResult = `Closed with: ${result}`;
         },
-        (reason) => {
+        (reason:any) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           // this.restService.addReport(content).subscribe((data) => {
           //   console.log(data);
@@ -96,7 +109,7 @@ export class DataComponent implements OnInit {
   }
 
   //Read Reports
-  openDetails(targetModal: any, report: number) {
+  openDetails(targetModal: any, report: IReports) {
     //this.selectedReported = report;
     this.modalService.open(targetModal, {
       centered: true,
@@ -104,6 +117,7 @@ export class DataComponent implements OnInit {
       size: 'lg',
     });
     this.restService.getReports();
+    this.setActiveReport(report)
   }
 
   //Edit Reports
