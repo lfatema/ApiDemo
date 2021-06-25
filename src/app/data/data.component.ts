@@ -128,19 +128,22 @@ export class DataComponent implements OnInit {
       backdrop: 'static',
       size: 'lg',
     });
-    this.editForm.patchValue({
-      id: report.id,
-      deviceNum: report.deviceNumber,
-      deviceInfo: report.deviceInfo,
-    });
+    // this.editForm.patchValue({
+    //   id: report.id,
+    //   deviceNum: report.deviceNumber,
+    //   deviceInfo: report.deviceInfo,
+    // });
+
+    this.setActiveReport(report);
   }
 
   //Delete Reports
 
-  deleteReport(id: number) {
+  deleteReport(report: IReports) {
     this.restService
-      .deleteReport(id)
+      .deleteReport(report.id)
       .subscribe(() => console.log('Report Deleted'));
+
   }
   openDelete(targetModal: any, report: IReports) {
     this.modalService.open(targetModal, {
@@ -148,6 +151,7 @@ export class DataComponent implements OnInit {
       backdrop: 'static',
       size: 'lg',
     });
+    this.setActiveReport(report);
   }
 
   // onDelete() {

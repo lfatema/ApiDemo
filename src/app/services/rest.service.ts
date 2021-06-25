@@ -11,7 +11,7 @@ import { catchError, delay, map } from 'rxjs/operators';
 @Injectable()
 export class RestService {
   private url: string =
-    'https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports?page=1&limit=10';
+    'https://5f46781ce165a60016ba9b84.mockapi.io/api/v1/reports';
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,8 @@ export class RestService {
 
   getReports(): Observable<IReports[]> {
     delay(100);
-    return this.http.get<IReports[]>(this.url).pipe(
+    let _url = this.url +"?page=1&limit=10"
+    return this.http.get<IReports[]>(_url).pipe(
       map((reports: any) => {
         console.log(reports);
         return reports;
@@ -46,6 +47,6 @@ export class RestService {
 
   /* DELETE Requests */
   deleteReport(id: number): Observable<IReports> {
-    return this.http.delete<IReports>(this.url + id);
+    return this.http.delete<IReports>(this.url + "/" + id);
   }
 }
