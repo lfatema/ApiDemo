@@ -26,11 +26,11 @@ export class DataComponent implements OnInit {
 
   // Set Active Report for transferring data to edit or delete
   activeReport: IReports = {
-     id: -1,
-     createdAt: new Date(),
-     updatedAt: new Date(),
-     deviceNumber: -1,
-     deviceInfo: ""
+    id: -1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deviceNumber: -1,
+    deviceInfo: '',
   };
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class DataComponent implements OnInit {
     });
   }
 
-  setActiveReport(report: IReports){
+  setActiveReport(report: IReports) {
     this.activeReport = report;
   }
 
@@ -72,10 +72,10 @@ export class DataComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result:any) => {
+        (result: any) => {
           this.closeResult = `Closed with: ${result}`;
         },
-        (reason:any) => {
+        (reason: any) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           // this.restService.addReport(content).subscribe((data) => {
           //   console.log(data);
@@ -117,7 +117,7 @@ export class DataComponent implements OnInit {
       size: 'lg',
     });
     this.restService.getReports();
-    this.setActiveReport(report)
+    this.setActiveReport(report);
   }
 
   //Edit Reports
@@ -143,7 +143,10 @@ export class DataComponent implements OnInit {
     this.restService
       .deleteReport(report.id)
       .subscribe(() => console.log('Report Deleted'));
-
+    this.modalService.close().subscribe(() => {
+      this.getReports();
+      this.setActiveReport(report);
+    });
   }
   openDelete(targetModal: any, report: IReports) {
     this.modalService.open(targetModal, {
@@ -154,12 +157,15 @@ export class DataComponent implements OnInit {
     this.setActiveReport(report);
   }
 
-  editReport(report: IReports){
-    this.restService.editReport(report).subscribe((result)=> {
-      console.log(result);
-    }, (error)=>{
-      console.error(error)
-    })
+  editReport(report: IReports) {
+    this.restService.editReport(report).subscribe(
+      (result) => {
+        console.log(result);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   // onDelete() {
