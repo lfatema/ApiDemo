@@ -33,9 +33,9 @@
         <td>
           <span>{{ report.deviceInfo }} </span>
         </td>
-        <!-- <td>
-          <span> {{ report.likes.length }} </span>
-        </td> -->
+
+        <td>
+          <span> {{ report?.likes?.length }} </span>
         <td>
           <button
             class="btn btn-sm btn-info"
@@ -45,14 +45,14 @@
           </button>
           <button
             class="btn btn-sm btn-warning"
-            (click)="openEdit(contentEdit, report.id)"
+            (click)="openEdit(contentEdit, report)"
           >
             Edit
           </button>
 
           <button
             class="btn btn-sm btn-danger"
-            (click)="openDelete(contentDelete, report.id)"
+            (click)="openDelete(contentDelete, report)"
           >
             Delete
           </button>
@@ -138,31 +138,31 @@
       <div class="form-group">
         <label for="id">Id</label>
         <div class="input-group">
-          <input id="id_rep" class="form-control" />
+          <input id="id_rep" class="form-control" value="{{activeReport.id}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="createdAt">Created At</label>
         <div class="input-group">
-          <input id="createdAt_rep" class="form-control" />
+          <input id="createdAt_rep" class="form-control" value="{{activeReport.createdAt}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="updatedAt">Updated At</label>
         <div class="input-group">
-          <input id="updatedAt_rep" class="form-control" />
+          <input id="updatedAt_rep" class="form-control" value="{{activeReport.updatedAt}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="deviceNum">Device Number</label>
         <div class="input-group">
-          <input id="deviceNum_rep" class="form-control" />
+          <input id="deviceNum_rep" class="form-control" value="{{activeReport.deviceNumber}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="deviceInfo">Device Info</label>
         <div class="input-group">
-          <input id="deviceInfo_rep" class="form-control" />
+          <input id="deviceInfo_rep" class="form-control" value="{{activeReport.deviceInfo}}"/>
         </div>
       </div>
     </form>
@@ -187,23 +187,26 @@
       <div class="form-group">
         <label for="id">Id</label>
         <div class="input-group">
-          <input formControlName="id" class="form-control" />
+          <!-- <input formControlName="id" class="form-control" value="{{activeReport.id}}"/> -->
+          <input class="form-control" value="{{activeReport.id}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="deviceNum">Device Number</label>
         <div class="input-group">
-          <input formControlName="deviceNum" class="form-control" />
+          <!-- <input formControlName="deviceNum" class="form-control" value="{{activeReport.deviceNumber}}"/> -->
+          <input class="form-control" value="{{activeReport.deviceNumber}}"/>
         </div>
       </div>
       <div class="form-group">
         <label for="deviceInfo">Device Info</label>
         <div class="input-group">
-          <input formControlName="deviceInfo" class="form-control" />
+          <!-- <input formControlName="deviceInfo" class="form-control" value="{{activeReport.deviceInfo}}"/> -->
+          <input class="form-control" value="{{activeReport.deviceInfo}}"/>
         </div>
       </div>
       <div class="border text-center">
-        <button data-dismiss="modal" class="btn btn-info">Save Changes</button>
+        <button data-dismiss="modal" class="btn btn-info" (click)="editReport(activeReport)">Save Changes</button>
       </div>
     </form>
   </div>
@@ -225,7 +228,7 @@
   <div class="modal-body">
     <h2>Are you sure you want to delete this record.</h2>
     <div class="border text-center">
-      <button data-dismiss="modal" class="btn btn-danger">Yes, Delete!</button>
+      <button data-dismiss="modal" class="btn btn-danger" (click)="deleteReport(activeReport)">Yes, Delete!</button>
     </div>
   </div>
   <div class="modal-footer">
