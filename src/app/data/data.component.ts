@@ -1,7 +1,7 @@
 import { Likes, IReports } from './../services/report';
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -142,12 +142,17 @@ export class DataComponent implements OnInit {
   deleteReport(report: IReports) {
     this.restService
       .deleteReport(report.id)
-      .subscribe(() => console.log('Report Deleted'));
-    this.modalService.close().subscribe(() => {
-      this.getReports();
-      this.setActiveReport(report);
-    });
+      .subscribe(() => {
+        console.log('Report Deleted')
+        this.getReports();
+        this.modalService.dismissAll();
+      });
+    // this.modalService.close().subscribe(() => {
+    //   this.getReports();
+    //   this.setActiveReport(report);
+    // });
   }
+
   openDelete(targetModal: any, report: IReports) {
     this.modalService.open(targetModal, {
       centered: true,
@@ -161,6 +166,8 @@ export class DataComponent implements OnInit {
     this.restService.editReport(report).subscribe(
       (result) => {
         console.log(result);
+        this.getReports();
+        this.modalService.dismissAll();
       },
       (error) => {
         console.error(error);
