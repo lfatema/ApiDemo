@@ -1,0 +1,18 @@
+.create {
+  margin-top: 15px;
+}
+
+border {
+  padding: 10px;
+}
+.btn {
+  margin-right: 10px;
+}
+
+table .btn {
+  margin: 2px;
+}
+
+.text-center {
+  margin-top: 10px;
+}
