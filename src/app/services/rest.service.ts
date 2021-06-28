@@ -15,11 +15,11 @@ export class RestService {
 
   constructor(private http: HttpClient) {}
 
-  /* GET Requests */
+  /* Create Requests */
 
   getReports(): Observable<IReports[]> {
     delay(100);
-    let _url = this.url +"?page=1&limit=10"
+    let _url = this.url + '?page=1&limit=10';
     return this.http.get<IReports[]>(_url).pipe(
       map((reports: any) => {
         console.log(reports);
@@ -28,17 +28,21 @@ export class RestService {
     );
   }
 
-  getLikes(id: number): Observable<Likes[]> {
-    delay(100);
-    return this.http.get<Likes[]>(this.url + id + '/likes').pipe(
-      map((likes: any) => {
-        console.log(likes);
-        return likes;
-      })
-    );
-  }
+  // getLikes(id: number): Observable<Likes[]> {
+  //   delay(100);
+  //   return this.http.get<Likes[]>(this.url + id + '/likes').pipe(
+  //     map((likes: any) => {
+  //       console.log(likes);
+  //       return likes;
+  //     })
+  //   );
+  // }
 
-  /* POST Requests */
+  /* Read Requests */
+  editReport(report: IReports): Observable<any> {
+    return this.http.post(this.url, report);
+  }
+  /* Update Requests */
   addReport(report: IReports): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(report);
@@ -47,10 +51,6 @@ export class RestService {
 
   /* DELETE Requests */
   deleteReport(id: number): Observable<IReports> {
-    return this.http.delete<IReports>(this.url + "/" + id);
-  }
-
-  editReport(report: IReports): Observable<any>{
-    return this.http.post(this.url, report);
+    return this.http.delete<IReports>(this.url + '/' + id);
   }
 }

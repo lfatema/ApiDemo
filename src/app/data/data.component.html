@@ -34,8 +34,10 @@
           <span>{{ report.deviceInfo }} </span>
         </td>
 
-        <td>
+        <!-- <td>
           <span> {{ report?.likes?.length }} </span>
+        </td> -->
+
         <td>
           <button
             class="btn btn-sm btn-info"
@@ -138,31 +140,51 @@
       <div class="form-group">
         <label for="id">Id</label>
         <div class="input-group">
-          <input id="id_rep" class="form-control" value="{{activeReport.id}}"/>
+          <input
+            id="id_rep"
+            class="form-control"
+            value="{{ activeReport.id }}"
+          />
         </div>
       </div>
       <div class="form-group">
         <label for="createdAt">Created At</label>
         <div class="input-group">
-          <input id="createdAt_rep" class="form-control" value="{{activeReport.createdAt}}"/>
+          <input
+            id="createdAt_rep"
+            class="form-control"
+            value="{{ activeReport.createdAt }}"
+          />
         </div>
       </div>
       <div class="form-group">
         <label for="updatedAt">Updated At</label>
         <div class="input-group">
-          <input id="updatedAt_rep" class="form-control" value="{{activeReport.updatedAt}}"/>
+          <input
+            id="updatedAt_rep"
+            class="form-control"
+            value="{{ activeReport.updatedAt }}"
+          />
         </div>
       </div>
       <div class="form-group">
         <label for="deviceNum">Device Number</label>
         <div class="input-group">
-          <input id="deviceNum_rep" class="form-control" value="{{activeReport.deviceNumber}}"/>
+          <input
+            id="deviceNum_rep"
+            class="form-control"
+            value="{{ activeReport.deviceNumber }}"
+          />
         </div>
       </div>
       <div class="form-group">
         <label for="deviceInfo">Device Info</label>
         <div class="input-group">
-          <input id="deviceInfo_rep" class="form-control" value="{{activeReport.deviceInfo}}"/>
+          <input
+            id="deviceInfo_rep"
+            class="form-control"
+            value="{{ activeReport.deviceInfo }}"
+          />
         </div>
       </div>
     </form>
@@ -184,30 +206,40 @@
   </div>
   <div class="modal-body">
     <!-- <form [formGroup]="editForm" novalidate> -->
-      <div class="form-group">
-        <label for="id">Id</label>
-        <div class="input-group">
-          <!-- <input formControlName="id" class="form-control" value="{{activeReport.id}}"/> -->
-          <input class="form-control" [(ngModel)]="activeReport.id"/>
-        </div>
+    <div class="form-group">
+      <label for="id">Id</label>
+      <div class="input-group">
+        <!-- <input formControlName="id" class="form-control" value="{{activeReport.id}}"/> -->
+        <input class="form-control" [(ngModel)]="activeReport.id" />
       </div>
-      <div class="form-group">
-        <label for="deviceNum">Device Number</label>
-        <div class="input-group">
-          <!-- <input formControlName="deviceNum" class="form-control" value="{{activeReport.deviceNumber}}"/> -->
-          <input class="form-control" [(ngModel)]="activeReport.deviceNumber" />
-        </div>
+    </div>
+    <div class="form-group">
+      <label for="deviceNum">Device Number</label>
+      <div class="input-group">
+        <!-- <input formControlName="deviceNum" class="form-control" value="{{activeReport.deviceNumber}}"/> -->
+        <input class="form-control" [(ngModel)]="activeReport.deviceNumber" />
       </div>
-      <div class="form-group">
-        <label for="deviceInfo">Device Info</label>
-        <div class="input-group">
-          <!-- <input formControlName="deviceInfo" class="form-control" value="{{activeReport.deviceInfo}}"/> -->
-          <input class="form-control" type="text" [(ngModel)]="activeReport.deviceInfo"/>
-        </div>
+    </div>
+    <div class="form-group">
+      <label for="deviceInfo">Device Info</label>
+      <div class="input-group">
+        <!-- <input formControlName="deviceInfo" class="form-control" value="{{activeReport.deviceInfo}}"/> -->
+        <input
+          class="form-control"
+          type="text"
+          [(ngModel)]="activeReport.deviceInfo"
+        />
       </div>
-      <div class="border text-center">
-        <button data-dismiss="modal" class="btn btn-info" (click)="editReport(activeReport)">Save Changes</button>
-      </div>
+    </div>
+    <div class="border text-center">
+      <button
+        data-dismiss="modal"
+        class="btn btn-info"
+        (click)="editReport(activeReport)"
+      >
+        Save Changes
+      </button>
+    </div>
     <!-- </form> -->
   </div>
 </ng-template>
@@ -228,7 +260,13 @@
   <div class="modal-body">
     <h2>Are you sure you want to delete this record.</h2>
     <div class="border text-center">
-      <button data-dismiss="modal" class="btn btn-danger" (click)="deleteReport(activeReport)">Yes, Delete!</button>
+      <button
+        data-dismiss="modal"
+        class="btn btn-danger"
+        (click)="deleteReport(activeReport)"
+      >
+        Yes, Delete!
+      </button>
     </div>
   </div>
   <div class="modal-footer">

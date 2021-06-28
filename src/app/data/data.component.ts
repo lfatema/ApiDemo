@@ -1,7 +1,7 @@
-import { Likes, IReports } from './../services/report';
+import { IReports } from './../services/report';
 import { RestService } from './../services/rest.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -60,12 +60,12 @@ export class DataComponent implements OnInit {
   }
 
   //Get Likes
-  public getlikes(report: any) {
-    this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
-      report.likes = data;
-      this.likes = data;
-    });
-  }
+  // public getlikes(report: any) {
+  //   this.restService.getLikes(report.id).subscribe((data: Likes[]) => {
+  //     report.likes = data;
+  //     this.likes = data;
+  //   });
+  // }
 
   //Create Reports
   open(content: any) {
@@ -77,9 +77,6 @@ export class DataComponent implements OnInit {
         },
         (reason: any) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-          // this.restService.addReport(content).subscribe((data) => {
-          //   console.log(data);
-          //   this.getReports();
         }
       );
   }
@@ -101,16 +98,12 @@ export class DataComponent implements OnInit {
         this.reports.push(result);
         console.log('Result: ', result);
       });
-    // this.restService.addReport(f.value).subscribe((content) => {
     this.ngOnInit();
-    // console.log(content);
-    // });
     this.modalService.dismissAll();
   }
 
   //Read Reports
   openDetails(targetModal: any, report: IReports) {
-    //this.selectedReported = report;
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static',
@@ -123,37 +116,6 @@ export class DataComponent implements OnInit {
   //Edit Reports
 
   openEdit(targetModal: any, report: IReports) {
-    this.modalService.open(targetModal, {
-      centered: true,
-      backdrop: 'static',
-      size: 'lg',
-    });
-    // this.editForm.patchValue({
-    //   id: report.id,
-    //   deviceNum: report.deviceNumber,
-    //   deviceInfo: report.deviceInfo,
-    // });
-
-    this.setActiveReport(report);
-  }
-
-  //Delete Reports
-
-  deleteReport(report: IReports) {
-    this.restService
-      .deleteReport(report.id)
-      .subscribe(() => {
-        console.log('Report Deleted')
-        this.getReports();
-        this.modalService.dismissAll();
-      });
-    // this.modalService.close().subscribe(() => {
-    //   this.getReports();
-    //   this.setActiveReport(report);
-    // });
-  }
-
-  openDelete(targetModal: any, report: IReports) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static',
@@ -175,9 +137,22 @@ export class DataComponent implements OnInit {
     );
   }
 
-  // onDelete() {
-  //   this.modalService.delete(this.reportId).subscribe((data) => {
-  //     this.ngOnInit();
-  //     this.modalService.dismissAll();
-  //   });
+  //Delete Reports
+
+  deleteReport(report: IReports) {
+    this.restService.deleteReport(report.id).subscribe(() => {
+      console.log('Report Deleted');
+      this.getReports();
+      this.modalService.dismissAll();
+    });
+  }
+
+  openDelete(targetModal: any, report: IReports) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg',
+    });
+    this.setActiveReport(report);
+  }
 }
