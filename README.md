@@ -2,7 +2,7 @@
 
 The main goal of this project is to perform a CRUD operation using a fake API created using mockapi.io.
 
-The following project uses [Angular 10](https://angular.io/) and [Bootstrap](https://getbootstrap.com/) for the UI development.
+The following project uses [Angular 12](https://angular.io/) and [Bootstrap](https://getbootstrap.com/) for the UI development.
 
 ---
 
