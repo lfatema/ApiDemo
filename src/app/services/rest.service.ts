@@ -40,7 +40,7 @@ export class RestService {
 
   /* Read Requests */
   editReport(report: IReports): Observable<any> {
-    return this.http.post(this.url, report);
+    return this.http.put(this.url + '/' + report.id, report);
   }
   /* Update Requests */
   addReport(report: IReports): Observable<any> {
