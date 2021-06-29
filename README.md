@@ -54,11 +54,11 @@ We have created a HTTP service to make API calls using below command:
 
 > ng generate service RestService
 
-Now we will create a Data Compnent class that will perform the CRUD operations. We define components using the below command:
+Now we will create a Data Component class that will perform the CRUD operations. We define components using the below command:
 
 > ng generate component Data
 
-We define the GET, POST and DELETE Requests in our RestService class.
+We define the GET, POST, PUT and DELETE Requests in our RestService class.
 
 To retrieve the response and display it, we have created a table in our .html class.
 

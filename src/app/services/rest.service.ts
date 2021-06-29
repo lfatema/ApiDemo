@@ -1,12 +1,8 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IReports, Likes } from './report';
-import { catchError, delay, map } from 'rxjs/operators';
+import { IReports } from './report';
+import { delay, map } from 'rxjs/operators';
 
 @Injectable()
 export class RestService {
